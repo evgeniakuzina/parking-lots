@@ -99,7 +99,8 @@ class ParkingLotRepository extends ServiceEntityRepository
             FROM App\Entity\ParkingLot pl
             WHERE pl.timeOut is null
             '
-        )->getSingleScalarResult();
+        )
+            ->getSingleScalarResult();
 
         return $total <= self::CAPACITY;
     }
