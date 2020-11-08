@@ -4,24 +4,37 @@ declare (strict_types=1);
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\ParkingLotRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class OperatorController 
+class OperatorController extends AbstractController
 {
-    /**
-     * @Route("api/v1/operator/lots", methods={"GET"})
-     */
-    public function getOccupiedLots(): JsonResponse
+    protected $repository;
+
+    public function __construct(ParkingLotRepository $repository)
     {
-        return new JsonResponse(['total_occupied' => 1], JsonResponse::HTTP_OK);
+        $this->repository = $repository;
+    }
+    /**
+     * @Route("operator/lots", methods={"GET"}, name="occupied.lots")
+     */
+    public function getOccupiedLots()
+    {
+        $totalOccupied = $this->repository->getAllOccupied();
+
+        return $this->render('total-occupied.html.twig', [
+            'total_occupied' => $totalOccupied,
+        ]);
     }
 
     /**
-     * @Route("api/v1/operator/history", methods={"GET"})
+     * @Route("operator/history", methods={"GET"}, name="parking.history")
      */
-    public function history(): JsonResponse
+    public function history()
     {
-        return new JsonResponse(['history' => 'history'], JsonResponse::HTTP_OK);
+        return $this->render('history.html.twig',[
+            'history' => $this->repository->getAll(),
+        ]);
     }
 }

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Общее количество занятых мест</title>
+    </head>
+    <body>
+        <p>Мест занято: {{ total_occupied }}</p>
+        <form action="{{ path("parking.history") }}">
+            <input type="submit" value="Посмотреть историю" />
+        </form>
+    </body>
+</html>
