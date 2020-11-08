@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>История</title>
+    </head>
+    <body>
+        <ul>
+            {% for item in history %}
+                <li>Номер машины: {{ item.vehicleNumber }}. Время заезда: {{ item.timeIn|date("Y-m-d H:i:s") }}. Время выезда: {{ item.timeOut is empty ? "Еще не выехал" : item.timeOut|date("Y-m-d H:i:s") }}.</li>
+            {% endfor %}
+        </ul>
+        <form action="{{ path("occupied.lots") }}">
+            <input type="submit" value="Посмотреть общее количество занятых слотов" />
+        </form>
+    </body>
+</html>
